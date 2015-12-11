@@ -1,5 +1,8 @@
 package ch.fhnw.tictactoe.app;
 
+import ch.fhnw.tictactoe.logic.Game;
+import ch.fhnw.tictactoe.logic.GameBoardModel;
+import ch.fhnw.tictactoe.logic.Player;
 import ch.fhnw.tictactoe.present.info.fx.scene.GameScene;
 import ch.fhnw.tictactoe.present.info.fx.scene.InfoScene;
 import ch.fhnw.tictactoe.present.info.fx.scene.SceneSwitchModel;
@@ -15,12 +18,25 @@ public class ApplicationContext {
     private Stage primaryStage;
     private String version;
     private SceneSwitchModel sceneSwitchModel;
+    private Game game;
 
 
 
     public ApplicationContext(final String version, Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.version = version;
+        game = new Game();
+
+        game.getGameBoard().setMove(GameBoardModel.Pos.M00, Player.Type.COMPUTER);
+        game.getGameBoard().setMove(GameBoardModel.Pos.M01, Player.Type.COMPUTER);
+        game.getGameBoard().setMove(GameBoardModel.Pos.M02, Player.Type.COMPUTER);
+/*
+        game.getGameBoard().setMove(GameBoardModel.Pos.M10, Player.Type.COMPUTER);
+        game.getGameBoard().setMove(GameBoardModel.Pos.M11, Player.Type.COMPUTER);
+        game.getGameBoard().setMove(GameBoardModel.Pos.M12, Player.Type.COMPUTER);
+*/
+        System.out.println(game.negmax(game.getGameBoard(), 1, new Player(Player.Type.COMPUTER)));
+
         sceneSwitchModel = new SceneSwitchModel(
                 new InfoScene(this),
                 new GameScene(this),
@@ -29,6 +45,10 @@ public class ApplicationContext {
 
 
 
+    }
+
+    public Game getGame() {
+        return game;
     }
 
     public Stage getPrimaryStage() {
