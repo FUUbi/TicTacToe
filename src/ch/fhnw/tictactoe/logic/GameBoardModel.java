@@ -7,7 +7,7 @@ import java.util.List;
  * Created by Fabrizio on 08.12.2015.
  */
 public class GameBoardModel{
-    private int[] board;
+    public int[] board;
     private int lastMove;
 
     public GameBoardModel() {

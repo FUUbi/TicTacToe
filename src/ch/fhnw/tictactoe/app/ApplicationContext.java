@@ -1,6 +1,7 @@
 package ch.fhnw.tictactoe.app;
 
 import ch.fhnw.tictactoe.logic.Game;
+import ch.fhnw.tictactoe.logic.GameBoardModel;
 import ch.fhnw.tictactoe.present.info.fx.scene.GameScene;
 import ch.fhnw.tictactoe.present.info.fx.scene.InfoScene;
 import ch.fhnw.tictactoe.present.info.fx.scene.SceneSwitchModel;
@@ -25,18 +26,26 @@ public class ApplicationContext {
         this.version = version;
         game = new Game();
 
-        game.getGameBoard().setMove(0, -1);
-        game.getGameBoard().setMove(1, 1);
-        game.getGameBoard().setMove(2, -1);
 
-        game.getGameBoard().setMove(3, 1);
-        game.getGameBoard().setMove(4, -1);
+        game.getGameBoard().setMove(0, -1);       //                             game.getGameBoard().setMove(8, 1);
+        game.getGameBoard().setMove(1, 1);       //                             game.getGameBoard().setMove(8, 1);
+        game.getGameBoard().setMove(4, 1);       //                             game.getGameBoard().setMove(8, 1);
+        game.getGameBoard().setMove(3, -1);       //                             game.getGameBoard().setMove(8, 1);
+        game.getGameBoard().setMove(6, 1);       //                             game.getGameBoard().setMove(8, 1);
+        game.getGameBoard().setMove(8, -1);       //                             game.getGameBoard().setMove(8, 1);
+
+        for(int moves : game.getGameBoard().getMoves()){
+            GameBoardModel gb = game.getGameBoard().clone();
+            gb.setMove(moves, -1);
+            System.out.println(moves + " " + game.negmax(gb, 9, -1));
+
+        }
 /*
         game.getGameBoard().setMove(GameBoardModel.Pos.M10, Player.Type.COMPUTER);
         game.getGameBoard().setMove(GameBoardModel.Pos.M11, Player.Type.COMPUTER);
         game.getGameBoard().setMove(GameBoardModel.Pos.M12, Player.Type.COMPUTER);
 */
-        System.out.println(game.negmax(game.getGameBoard(), 1, -1));
+        System.out.println(game.negmax(game.getGameBoard(), 9, -1));
 
         sceneSwitchModel = new SceneSwitchModel(
                 new InfoScene(this),

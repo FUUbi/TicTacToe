@@ -1,6 +1,5 @@
 package ch.fhnw.tictactoe.logic;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,35 +18,34 @@ public class Game {
     }
 
     public int negmax(GameBoardModel gb, int depth, int player){
-        if(depth == 0 || gb.getMoves().size() == 0){
-            return gameOver(gb.getBoard(), player); // return Heuristik value
-        }
-        int bestValue = Integer.MIN_VALUE;
         List<Integer> moves = gb.getMoves();
-        List<GameBoardModel> childBoards = new ArrayList<>();
-        int nextPlayer = (player == -1) ? 1 : -1;
-        int bestMove = -1;
+        if(heuristicValue(gb.getBoard(),player) == 10){
+            double fac = depth / 9.0 * 100;
+
+            return (int) (player * heuristicValue(gb.getBoard(),player)  *fac);
+        }
+        if(depth == 0 || moves.isEmpty()){
+            double fac = depth / 9.0 * 100;
+
+            return (int) (player * heuristicValue(gb.getBoard(),player)  *fac);
+        }
+
+        int bestValue = Integer.MIN_VALUE;
 
         for(int m : moves){
-            GameBoardModel newGb = gb.clone();
-            newGb.setMove(m, player);
-
-            int val = -negmax(newGb, depth, nextPlayer);
-            int newbest = Math.max(bestValue, val);
-            System.out.println(newGb.getLastMove() + " " +  player* newbest);
-
-            bestMove = (bestValue < newbest) ? newGb.getLastMove() : bestMove;
-
+            GameBoardModel childNode = gb.clone();
+            childNode.setMove(m, player);
+            int val = -negmax(childNode, depth -1, -player);
+            bestValue = Math.max(bestValue, val);
         }
-
-
-        return bestMove;
+        return bestValue;
 
     }
 
 
-    public int gameOver(int[] gb,  int player){
+    public int heuristicValue(int[] gb, int player){
         //Sieg
+
 
 
         if( gb[0] == player && gb[3] == player && gb[6] == player || // row 0
@@ -61,7 +59,7 @@ public class Game {
             gb[0] == player && gb[4] == player && gb[8] == player || // diagonal NW - SE
             gb[2] == player && gb[4] == player && gb[6] == player )  // diagonal NE - SW
         {
-           return 100;
+           return 10;
         }
         return 0;
     }
