@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class Game {
     private GameBoardModel gameBoard;
-
+    public int acct = 0 ;
     public Game(){
         gameBoard = new GameBoardModel();
 
@@ -20,7 +20,7 @@ public class Game {
     public int negmax(GameBoardModel gb, int depth, int player){
         List<Integer> moves = gb.getMoves();
 
-        if(depth == 0 || moves.isEmpty()){
+        if(depth == 0 || moves.isEmpty() || heuristicValue(gb.getBoard(), 1) != 0){
 
             return heuristicValue(gb.getBoard(), player);
         }
@@ -40,8 +40,8 @@ public class Game {
 
     public int heuristicValue(int[] gb, int p) {
         //Sieg
-        for (int player : new int[]{-1, 1}) {
-
+        int value = 0;
+        for (int player : new int[]{p, p*-1}) {
 
             if (gb[0] == player && gb[3] == player && gb[6] == player || // row 0
                     gb[1] == player && gb[4] == player && gb[7] == player || // row 1
@@ -54,11 +54,11 @@ public class Game {
                     gb[0] == player && gb[4] == player && gb[8] == player || // diagonal NW - SE
                     gb[2] == player && gb[4] == player && gb[6] == player)  // diagonal NE - SW
             {
-                return (p == -1) ? 1 : -1;
+                value = ( player == acct) ? -1 : 1;
             }
 
         }
-        return 0;
+        return value;
     }
 
 

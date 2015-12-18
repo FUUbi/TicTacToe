@@ -25,14 +25,49 @@ public class ApplicationContext {
         this.primaryStage = primaryStage;
         this.version = version;
         game = new Game();
+        // 012
+        // 345
+        // 678
 
+        // -1 1 -1
+        // -1 0 0
+        //  0 0 1
+        game.getGameBoard().setMove(0, -1);
+        game.getGameBoard().setMove(1, 1);
+        game.getGameBoard().setMove(2, -1);
 
-        game.getGameBoard().setMove(0, -1);       //                             game.getGameBoard().setMove(8, 1);
-        game.getGameBoard().setMove(1, 1);       //                             game.getGameBoard().setMove(8, 1);
-        game.getGameBoard().setMove(4, 1);       //                             game.getGameBoard().setMove(8, 1);
-        game.getGameBoard().setMove(3, -1);       //                             game.getGameBoard().setMove(8, 1);
-        game.getGameBoard().setMove(6, 1);       //                             game.getGameBoard().setMove(8, 1);
-        game.getGameBoard().setMove(8, -1);       //                             game.getGameBoard().setMove(8, 1);
+        game.getGameBoard().setMove(3, -1);
+        game.getGameBoard().setMove(4, 0);
+        game.getGameBoard().setMove(5, 0);
+
+        game.getGameBoard().setMove(6, 0);
+        game.getGameBoard().setMove(7, 0);
+        game.getGameBoard().setMove(8, 1);
+
+        game.acct = 1;
+
+        for(int moves : game.getGameBoard().getMoves()){
+            GameBoardModel gb = game.getGameBoard().clone();
+            gb.setMove(moves, 1);
+            System.out.println(moves + " " + game.negmax(gb, 9, 1));
+
+        }
+
+        // -1 1 -1
+        //  1 1 0
+        //  0 0 0
+        game.acct = -1;
+        game.getGameBoard().setMove(0, -1);
+        game.getGameBoard().setMove(1, 1);
+        game.getGameBoard().setMove(2, -1);
+
+        game.getGameBoard().setMove(3, 1);
+        game.getGameBoard().setMove(4, 1);
+        game.getGameBoard().setMove(5, 0);
+
+        game.getGameBoard().setMove(6, 0);
+        game.getGameBoard().setMove(7, 0);
+        game.getGameBoard().setMove(8, 0);
 
         for(int moves : game.getGameBoard().getMoves()){
             GameBoardModel gb = game.getGameBoard().clone();
