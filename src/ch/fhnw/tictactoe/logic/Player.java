@@ -4,11 +4,14 @@ package ch.fhnw.tictactoe.logic;
  * Created by Fabrizio on 08.12.2015.
  */
 public class Player {
-    Type type;
-    int score;
+    private Type type;
+    private int playerValue;
+    private int score;
+    private int bestMove;
     
     public Player(Type type) {
         this.type = type;
+        this.playerValue = (type == Type.O) ? 1 : -1;
         score = 0;
     }
 
@@ -24,11 +27,23 @@ public class Player {
         return type;
     }
 
+    public int getPlayerValue() {
+        return playerValue;
+    }
+
+    public void setBestMove(int bestMove) {
+        this.bestMove = bestMove;
+    }
+
+    public int getBestMove() {
+        return bestMove;
+    }
+
     public int getScore() {
         return score;
     }
 
     public enum Type{
-        HUMAN, COMPUTER
+        X, O
     }
 }

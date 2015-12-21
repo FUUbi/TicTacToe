@@ -6,37 +6,39 @@ import java.util.List;
  * Created by Fabrizio on 08.12.2015.
  */
 public class Game extends GameBoard {
-    public int acct = 0 ;
-    public int bestMove;
-    public Game(){
+    private PlayerModel playerModel;
+    Player actualPlayer;
 
+    public Game() {
+        this.playerModel = new PlayerModel();
     }
 
-    public int minimax(int depth, int player) {
+    public int minimax(int depth, Player player) {
         List<Integer> moves = getMoves();
+        actualPlayer = playerModel.getTurn();
 
-        int bestScore = (acct == player) ?  Integer.MIN_VALUE : Integer.MAX_VALUE;
+        int bestScore = (actualPlayer.getType() == player.getType()) ?  Integer.MIN_VALUE : Integer.MAX_VALUE;
 
-        if(gameOver() || depth == 0 || moves.size() == 0){
+        if(isgameOver() || depth == 0 || moves.size() == 0){
             return heuristicValue();
 
         }
 
         for (int m : moves) {
-            setMove(m, player);
+            setMove(m, player.getPlayerValue());
 
-            if (acct == player) {
-                int currentScore = minimax( depth - 1, -player);
+            if (actualPlayer.getType() == player.getType()) {
+                int currentScore = minimax( depth - 1, playerModel.getOponed(player));
                 if(currentScore > bestScore){
                     bestScore = currentScore;
-                    bestMove = m;
+                    actualPlayer.setBestMove(m);
                 }
 
             } else {
-                int currentScore = minimax( depth - 1, -player);
+                int currentScore = minimax( depth - 1, playerModel.getOponed(player));
                 if(currentScore < bestScore){
                     bestScore = currentScore;
-                    bestMove = m;
+                    actualPlayer.setBestMove(m);
                 }
             }
             removeMove(m);
@@ -60,15 +62,14 @@ public class Game extends GameBoard {
                     gb[0] == player && gb[4] == player && gb[8] == player || // diagonal NW - SE
                     gb[2] == player && gb[4] == player && gb[6] == player)  // diagonal NE - SW
             {
-                return (player == acct) ? 1 : -1;
+                return (player == actualPlayer.getPlayerValue()) ? 1 : -1;
             }
         }
-
 
         return 0;
     }
 
-    public boolean gameOver(){
+    public boolean isgameOver(){
         int[] gb = getBoard();
 
         for (int player : new int[]{1,-1}) {
@@ -90,4 +91,7 @@ public class Game extends GameBoard {
         return false;
         }
 
+    public PlayerModel getPlayerModel() {
+        return playerModel;
+    }
 }
