@@ -1,7 +1,6 @@
 package ch.fhnw.tictactoe.app;
 
 import ch.fhnw.tictactoe.logic.Game;
-import ch.fhnw.tictactoe.logic.GameBoardModel;
 import ch.fhnw.tictactoe.present.info.fx.scene.GameScene;
 import ch.fhnw.tictactoe.present.info.fx.scene.InfoScene;
 import ch.fhnw.tictactoe.present.info.fx.scene.SceneSwitchModel;
@@ -32,55 +31,46 @@ public class ApplicationContext {
         // -1 1 -1
         // -1 0 0
         //  0 0 1
-        game.getGameBoard().setMove(0, -1);
-        game.getGameBoard().setMove(1, 1);
-        game.getGameBoard().setMove(2, -1);
+        game.setMove(0, -1);
+        game.setMove(1, 1);
+        game.setMove(2, -1);
 
-        game.getGameBoard().setMove(3, -1);
-        game.getGameBoard().setMove(4, 0);
-        game.getGameBoard().setMove(5, 0);
+        game.setMove(3, -1);
+        game.setMove(4, 0);
+        game.setMove(5, 0);
 
-        game.getGameBoard().setMove(6, 0);
-        game.getGameBoard().setMove(7, 0);
-        game.getGameBoard().setMove(8, 1);
+        game.setMove(6, 0);
+        game.setMove(7, 0);
+        game.setMove(8, 1);
 
         game.acct = 1;
+        System.out.println(game.minimax(9, 1));
+        System.out.println(game.bestMove);
 
-        for(int moves : game.getGameBoard().getMoves()){
-            GameBoardModel gb = game.getGameBoard().clone();
-            gb.setMove(moves, 1);
-            System.out.println(moves + " " + game.negmax(gb, 9, 1));
+        // -1 1 0
+        // -1 1 0
+        //  1 0 0
+        game.acct = 1;
+        game.setMove(0, -1);
+        game.setMove(1, 1);
+        game.setMove(2, 0);
 
-        }
+        game.setMove(3, -1);
+        game.setMove(4, 1);
+        game.setMove(5, 0);
 
-        // -1 1 -1
-        //  1 1 0
-        //  0 0 0
-        game.acct = -1;
-        game.getGameBoard().setMove(0, -1);
-        game.getGameBoard().setMove(1, 1);
-        game.getGameBoard().setMove(2, -1);
+        game.setMove(6, 1);
+        game.setMove(7, 0);
+        game.setMove(8, 0);
 
-        game.getGameBoard().setMove(3, 1);
-        game.getGameBoard().setMove(4, 1);
-        game.getGameBoard().setMove(5, 0);
-
-        game.getGameBoard().setMove(6, 0);
-        game.getGameBoard().setMove(7, 0);
-        game.getGameBoard().setMove(8, 0);
-
-        for(int moves : game.getGameBoard().getMoves()){
-            GameBoardModel gb = game.getGameBoard().clone();
-            gb.setMove(moves, -1);
-            System.out.println(moves + " " + game.negmax(gb, 9, -1));
-
-        }
+        System.out.println(game.minimax(9, 1));
+        System.out.println(game.bestMove);
 /*
-        game.getGameBoard().setMove(GameBoardModel.Pos.M10, Player.Type.COMPUTER);
-        game.getGameBoard().setMove(GameBoardModel.Pos.M11, Player.Type.COMPUTER);
-        game.getGameBoard().setMove(GameBoardModel.Pos.M12, Player.Type.COMPUTER);
+        game.getGb().setMove(GameBoardModel.Pos.M10, Player.Type.COMPUTER);
+        game.getGb().setMove(GameBoardModel.Pos.M11, Player.Type.COMPUTER);
+        game.getGb().setMove(GameBoardModel.Pos.M12, Player.Type.COMPUTER);
 */
-        System.out.println(game.negmax(game.getGameBoard(), 9, -1));
+
 
         sceneSwitchModel = new SceneSwitchModel(
                 new InfoScene(this),
