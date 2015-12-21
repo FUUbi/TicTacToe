@@ -29,15 +29,8 @@ public class PlayerModel {
         return x;
     }
 
-    public void setX(Player x) {
-        this.x = x;
-    }
-
     public Player getO() {
         return o;
     }
 
-    public void setO(Player o) {
-        this.o = o;
-    }
 }
