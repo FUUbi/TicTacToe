@@ -1,7 +1,7 @@
 package ch.fhnw.tictactoe.app;
 
 import ch.fhnw.tictactoe.logic.Game;
-import ch.fhnw.tictactoe.present.info.fx.scene.GameScene;
+import ch.fhnw.tictactoe.present.fx.GameScene;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 

@@ -1,4 +1,4 @@
-package ch.fhnw.tictactoe.present.info.fx.scene;
+package ch.fhnw.tictactoe.present.fx;
 
 import ch.fhnw.tictactoe.app.ApplicationContext;
 import ch.fhnw.tictactoe.logic.Game;

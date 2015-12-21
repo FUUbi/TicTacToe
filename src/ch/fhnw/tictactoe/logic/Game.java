@@ -50,7 +50,7 @@ public class Game extends GameBoard {
     public int heuristicValue() {
         int[] gb = getBoard();
 
-        for (int player : new int[]{1, -1}) {
+        for (int player : new int[]{-1,1 }) {
             if (    gb[0] == player && gb[3] == player && gb[6] == player || // row 0
                     gb[1] == player && gb[4] == player && gb[7] == player || // row 1
                     gb[2] == player && gb[5] == player && gb[8] == player || // row 2
