@@ -19,7 +19,7 @@ public class Game extends GameBoard {
 
         int bestScore = (actualPlayer.getType() == player.getType()) ?  Integer.MIN_VALUE : Integer.MAX_VALUE;
 
-        if(isgameOver() || depth == 0 || moves.size() == 0){
+        if( depth == 0 || moves.size() == 0){
             return heuristicValue();
 
         }
@@ -45,17 +45,19 @@ public class Game extends GameBoard {
             }
             removeMove(m);
 
+
+
         }
         return bestScore;
     }
 
     public int heuristicValue() {
         int[][] evaluationPatern = new int[][]{
-                {0,1,2}, {3,4,5}, {6,7,8},      //column 0  column 1  column 2
+                {0,1,2}, {3,4,5}, {6,7,8},         //column 0  column 1  column 2
                 {0,3,6},{1,4,7},{2,5,8},          //row 0 row 1 row 2
-                {0,4,8},{2,4,6} };      // diagonal NW - SE  diagonal NE - SW
+                {0,4,8},{2,4,6} };               // diagonal NW - SE  diagonal NE - SW
 
-        int[] gb = getBoard();
+
         int score = 0;
         int maximising = playerModel.getTurn().getPlayerValue();
         int minimising = playerModel.getOponed(playerModel.getTurn()).getPlayerValue();
@@ -65,15 +67,16 @@ public class Game extends GameBoard {
             int countInLineMin = 0;
 
             for (int pos : pattern){
-                if(gb[pos] == maximising) countInLineMax++;
-                if(gb[pos] == minimising) countInLineMin++;
+                if(getBoard()[pos] == maximising) countInLineMax++;
+                if(getBoard()[pos] == minimising) countInLineMin++;
             }
 
-            score += Math.pow(10, countInLineMax);
-            score -= Math.pow(10, countInLineMin);
+            score += (countInLineMax != 0) ? Math.pow(10, countInLineMax-1) : 0;
+            score -= (countInLineMin != 0) ? Math.pow(10, countInLineMin-1) : 0;
 
 
         }
+
         return score;
     }
 
