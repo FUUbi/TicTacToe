@@ -29,6 +29,7 @@ public class Game extends GameBoard {
 
             if (actualPlayer.getType() == player.getType()) {
                 int currentScore = minimax( depth - 1, playerModel.getOponed(player));
+
                 if(currentScore > bestScore){
                     bestScore = currentScore;
                     actualPlayer.setBestMove(m);
@@ -36,6 +37,7 @@ public class Game extends GameBoard {
 
             } else {
                 int currentScore = minimax( depth - 1, playerModel.getOponed(player));
+
                 if(currentScore < bestScore){
                     bestScore = currentScore;
                     actualPlayer.setBestMove(m);
@@ -48,45 +50,45 @@ public class Game extends GameBoard {
     }
 
     public int heuristicValue() {
+        int[][] evaluationPatern = new int[][]{
+                {0,1,2}, {3,4,5}, {6,7,8},      //column 0  column 1  column 2
+                {0,3,6},{1,4,7},{2,5,8},          //row 0 row 1 row 2
+                {0,4,8},{2,4,6} };      // diagonal NW - SE  diagonal NE - SW
+
         int[] gb = getBoard();
+        int score = 0;
+        int maximising = playerModel.getTurn().getPlayerValue();
+        int minimising = playerModel.getOponed(playerModel.getTurn()).getPlayerValue();
 
-        for (int player : new int[]{-1,1 }) {
-            if (    gb[0] == player && gb[3] == player && gb[6] == player || // row 0
-                    gb[1] == player && gb[4] == player && gb[7] == player || // row 1
-                    gb[2] == player && gb[5] == player && gb[8] == player || // row 2
+        for (int[] pattern : evaluationPatern){
+            int countInLineMax = 0;
+            int countInLineMin = 0;
 
-                    gb[0] == player && gb[1] == player && gb[2] == player || // column 0
-                    gb[3] == player && gb[4] == player && gb[5] == player || // column 1
-                    gb[6] == player && gb[7] == player && gb[8] == player || // column 2
-
-                    gb[0] == player && gb[4] == player && gb[8] == player || // diagonal NW - SE
-                    gb[2] == player && gb[4] == player && gb[6] == player)  // diagonal NE - SW
-            {
-                return (player == actualPlayer.getPlayerValue()) ? 1 : -1;
+            for (int pos : pattern){
+                if(gb[pos] == maximising) countInLineMax++;
+                if(gb[pos] == minimising) countInLineMin++;
             }
-        }
 
-        return 0;
+            score += Math.pow(10, countInLineMax);
+            score -= Math.pow(10, countInLineMin);
+
+
+        }
+        return score;
     }
 
     public boolean isgameOver(){
         int[] gb = getBoard();
 
+        int[][] evaluationPatern = new int[][]{
+                {0,1,2}, {3,4,5}, {6,7,8},      //column 0  column 1  column 2
+                {0,3,6},{1,4,7},{2,5,8},          //row 0 row 1 row 2
+                {0,4,8},{2,4,6} };      // diagonal NW - SE  diagonal NE - SW
+
         for (int player : new int[]{1,-1}) {
-            if (gb[0] == player && gb[3] == player && gb[6] == player || // row 0
-                    gb[1] == player && gb[4] == player && gb[7] == player || // row 1
-                    gb[2] == player && gb[5] == player && gb[8] == player || // row 2
-
-                    gb[0] == player && gb[1] == player && gb[2] == player || // column 0
-                    gb[3] == player && gb[4] == player && gb[5] == player || // column 1
-                    gb[6] == player && gb[7] == player && gb[8] == player || // column 2
-
-                    gb[0] == player && gb[4] == player && gb[8] == player || // diagonal NW - SE
-                    gb[2] == player && gb[4] == player && gb[6] == player)  // diagonal NE - SW
-            {
-                return true;
+            for(int[] pos : evaluationPatern){
+                if (    gb[pos[0]] == player && gb[pos[1]] == player && gb[pos[2]] == player ) return true;
             }
-
         }
         return false;
         }

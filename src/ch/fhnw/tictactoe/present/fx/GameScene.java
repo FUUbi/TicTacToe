@@ -47,7 +47,7 @@ public class GameScene extends Scene {
 
                     if(!game.isgameOver()){
                         game.getPlayerModel().setTurn(x);
-                        game.minimax(110, x);
+                        game.minimax(11, x);
                         int move = x.getBestMove();
                         game.setMove(move, x.getPlayerValue());
                         System.out.println("move " + move);
