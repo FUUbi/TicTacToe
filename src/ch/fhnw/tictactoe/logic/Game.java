@@ -20,7 +20,7 @@ public class Game extends GameBoard {
     public int[] minimax(int depth, Player player) {
         List<Integer> moves = getMoves();
         Player actualPlayer = playerModel.getTurn();
-        int a ;
+
         int bestScore = (actualPlayer.getType() == player.getType()) ?  Integer.MIN_VALUE : Integer.MAX_VALUE;
         int bestMove = -1;
         if( depth == 0 || moves.size() == 0 || isGameOver()){
