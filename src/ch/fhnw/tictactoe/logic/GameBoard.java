@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class GameBoard {
     public int[] board;
+    private int lastMove;
 
 
     public GameBoard() {
@@ -20,6 +21,7 @@ public class GameBoard {
 
     public void setMove(int pos, int player) {
         board[pos] = player;
+        lastMove = pos;
     }
 
     public void removeMove(int pos) {
@@ -37,6 +39,9 @@ public class GameBoard {
 
     }
 
+    public int getLastMove() {
+        return lastMove;
+    }
 
     public int[] getBoard() {
         return board;

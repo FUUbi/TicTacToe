@@ -1,0 +1,49 @@
+.X-field{
+    -fx-background-image: url('/x.jpg');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: stretch;
+}
+
+.O-field{
+    -fx-background-image: url('/o.jpg');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: stretch;
+}
+
+.blank-field{
+     -fx-background-image: url('/blank.jpg');
+     -fx-background-repeat: no-repeat;
+     -fx-background-size: stretch;
+ }
+
+.button-x{
+    -fx-background-image: url('/x.jpg');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: stretch;
+    -fx-alignment: center-left;
+}
+
+.button-o{
+    -fx-background-image: url('/o.jpg');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: stretch;
+    -fx-alignment: top-right;
+
+}
+
+
+.button-human{
+    -fx-background-image: url('/human.jpg');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: stretch;
+    -fx-alignment: top-right;
+
+}
+
+.button-AI{
+    -fx-background-image: url('/pc.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: stretch;
+    -fx-alignment: top-right;
+
+}
