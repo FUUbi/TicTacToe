@@ -52,7 +52,7 @@ public class Game extends GameBoard {
     }
 
     public int heuristicValue() {
-        int a;
+
         int score = 0;
         int maximising = playerModel.getTurn().getPlayerValue();
         int minimising = playerModel.getOponed(playerModel.getTurn()).getPlayerValue();
