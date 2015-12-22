@@ -37,7 +37,7 @@ public class GameScene extends Scene {
 
             final int finalI = i;
             p.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> {
-                if(event.getButton() == MouseButton.PRIMARY && game.getBoard()[finalI] == 0 && !game.isgameOver()){
+                if(event.getButton() == MouseButton.PRIMARY && game.getBoard()[finalI] == 0 && !game.isGameOver()){
                     System.out.println(finalI);
                     applicationContext.getGame().setMove(finalI, applicationContext.getGame().getPlayerModel().getO().getPlayerValue());
                     p.setStyle(
@@ -45,10 +45,10 @@ public class GameScene extends Scene {
                             "-fx-background-repeat: no-repeat;" +
                             "-fx-background-size: stretch");
 
-                    if(!game.isgameOver()){
+                    if(!game.isGameOver()){
                         game.getPlayerModel().setTurn(x);
-                        game.minimax(11, x);
-                        int move = x.getBestMove();
+
+                        int move = game.minimax(11, x)[1];
                         game.setMove(move, x.getPlayerValue());
                         System.out.println("move " + move);
                         boxes.get(move).setStyle(
