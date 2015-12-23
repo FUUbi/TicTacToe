@@ -21,19 +21,31 @@ public class Game {
     }
 
     public void moveAIPlayer(Player p, int depth){
-        playerModel.setMaximisingPlayer(p);
+        playerModel.setNexPlaxerToMove(p);
         int pos = minimax(depth, p)[1];
         gameBoard.setMove(pos, p.getPlayerValue());
+        playerModel.setNexPlaxerToMove(playerModel.getOponed(p));
+
+        if(isPlayerWinner(p)){
+            p.iterateScore();
+        }
     }
     public void moveHuman(Player p, int pos){
-        playerModel.setMaximisingPlayer(p);
+        playerModel.setNexPlaxerToMove(p);
         gameBoard.setMove(pos, p.getPlayerValue());
-        playerModel.setMaximisingPlayer(playerModel.getOponed(p));
+        playerModel.setNexPlaxerToMove(playerModel.getOponed(p));
+
+        if(isPlayerWinner(p)){
+            p.iterateScore();
+        }
     }
+
+
+
 
     private int[] minimax(int depth, Player player) {
         List<Integer> moves = gameBoard.getMoves();
-        Player maximisingPlayer = playerModel.getMaximisingPlayer();
+        Player maximisingPlayer = playerModel.getNexPlaxerToMove();
 
         int bestScore = (maximisingPlayer.getPlayerValue() == player.getPlayerValue()) ?  Integer.MIN_VALUE : Integer.MAX_VALUE;
         int bestMove = -1;
@@ -68,8 +80,8 @@ public class Game {
     private int heuristicValue() {
 
         int score = 0;
-        int maximising = playerModel.getMaximisingPlayer().getPlayerValue();
-        int minimising = playerModel.getOponed(playerModel.getMaximisingPlayer()).getPlayerValue();
+        int maximising = playerModel.getNexPlaxerToMove().getPlayerValue();
+        int minimising = playerModel.getOponed(playerModel.getNexPlaxerToMove()).getPlayerValue();
 
         for (int[] pattern : evaluationPatern){
             int countInLineMax = 0;
@@ -102,6 +114,21 @@ public class Game {
         return false;
         }
 
+    private boolean isPlayerWinner(Player p){
+        int player = p.getPlayerValue();
+        for(int[] pos : evaluationPatern){
+            if (    gameBoard.getBoard()[pos[0]] == player &&
+                    gameBoard.getBoard()[pos[1]] == player &&
+                    gameBoard.getBoard()[pos[2]] == player )
+                return true;
+        }
+
+        return false;
+    }
+
+
+
+
     public GameBoard getGameBoard() {
         return gameBoard;
     }
@@ -109,7 +136,6 @@ public class Game {
     public PlayerModel getPlayerModel() {
         return playerModel;
     }
-
 
     public enum Mode{
         HUMANvsAI, HUMANvsHUMAN

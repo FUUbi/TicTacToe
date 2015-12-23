@@ -16,14 +16,14 @@
      -fx-background-size: stretch;
  }
 
-.button-x{
+.label-x{
     -fx-background-image: url('/x.jpg');
     -fx-background-repeat: no-repeat;
     -fx-background-size: stretch;
     -fx-alignment: center-left;
 }
 
-.button-o{
+.label-o{
     -fx-background-image: url('/o.jpg');
     -fx-background-repeat: no-repeat;
     -fx-background-size: stretch;
@@ -32,7 +32,7 @@
 }
 
 
-.button-human{
+.label-human{
     -fx-background-image: url('/human.jpg');
     -fx-background-repeat: no-repeat;
     -fx-background-size: stretch;
@@ -40,10 +40,74 @@
 
 }
 
-.button-AI{
+.label-AI{
     -fx-background-image: url('/pc.png');
     -fx-background-repeat: no-repeat;
     -fx-background-size: stretch;
     -fx-alignment: top-right;
 
+}
+
+
+
+.label {
+    -fx-padding: 0em 0.5em 0em 0em;
+    -fx-text-fill: #2b2b2f;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 20pt;
+}
+
+
+.background{
+    -fx-background-color: #1d1d1d;
+}
+
+
+/*******************************************************************************
+ *                                                                             *
+ * Push Button                                                                 *
+ *                                                                             *
+ ******************************************************************************/
+
+.button {
+    -fx-padding: 5 22 5 22;
+    -fx-border-color: #8c8c8c;
+    -fx-border-width: 2;
+
+    -fx-background-radius: 0;
+
+    -fx-background-color: #1d1d1d;
+
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: #d8d8d8;
+}
+
+.button:hover{
+    -fx-background-color: #3a3a3a;
+}
+
+.button:pressed, .button:default:hover:pressed
+{
+    -fx-background-color: white;
+    -fx-text-fill: #1d1d1d;
+}
+
+.button:focused
+{
+    -fx-border-color: white, white;
+    -fx-border-width: 1, 1;
+    -fx-border-style: solid;
+    -fx-border-radius: 0, 0;
+    -fx-border-insets: 1 1 1 1, 0;
+}
+
+.button:default
+{
+    -fx-background-color: #008287;
+    -fx-text-fill: #ffffff;
+}
+
+.button:default:hover{
+    -fx-background-color: #219297;
 }

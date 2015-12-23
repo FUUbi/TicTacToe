@@ -18,19 +18,20 @@ import java.util.List;
  * Created by Fabrizio on 06.12.2015.
  */
 public class GameScene extends Scene {
+    List<Pane> boxes;
     Game game;
     int[] board;
     PlayerModel playerModel;
     Player x;
     Player o;
 
+    private Label labelVS;
+
     public GameScene(ApplicationContext applicationContext){
         super(new BorderPane());
         BorderPane borderPane = (BorderPane) getRoot();
 
         getStylesheets().add(getClass().getResource("/css/gameStyle.css").toString());
-
-        GridPane gameArea = new GridPane();
 
 
         this.game = applicationContext.getGame();
@@ -39,58 +40,10 @@ public class GameScene extends Scene {
         this.o = playerModel.getO();
         this.x = playerModel.getX();
 
-        game.gameMode = Game.Mode.HUMANvsHUMAN;
+        game.gameMode = Game.Mode.HUMANvsAI;
 
-        createCells(gameArea);
-
-        BorderPane infoPane = new BorderPane();
-
-
-        Label btnX = new Label();
-        btnX.setPrefSize(50, 50);
-        btnX.getStyleClass().add("button-x");
-
-        Label btnAI = new Label();
-        btnAI.setPrefSize(50, 50);
-        btnAI.getStyleClass().add("button-AI");
-
-        HBox hBoxX = new HBox();
-        hBoxX.getChildren().addAll(btnAI, btnX);
-
-
-        Label buttonProjected = new Label();
-        buttonProjected.setPrefSize(50, 50);
-        buttonProjected.getStyleClass().add("button-o");
-
-        Label buttonProjected2 = new Label();
-        buttonProjected2.setPrefSize(50, 50);
-        buttonProjected2.getStyleClass().add("button-human");
-
-        HBox hBox = new HBox();
-        hBox.getChildren().addAll(buttonProjected, buttonProjected2);
-
-        Label labelVS = new Label();
-        labelVS.setPrefSize(50, 50);
-        labelVS.getStyleClass().add("button-o");
-
-        Button btnReset = new Button("Reset");
-        btnReset.setPrefSize(100, 50);
-
-        Button btnNewGame = new Button("New Game");
-        btnNewGame.setPrefSize(100, 50);
-
-        BorderPane hBox1 = new BorderPane();
-
-        hBox1.setLeft(btnReset);
-        hBox1.setRight(btnNewGame);
-
-
-
-        infoPane.setCenter(labelVS);
-        infoPane.setLeft(hBoxX);
-        infoPane.setRight(hBox);
-        infoPane.setBottom(hBox1);
-
+        GridPane gameArea = getGameArea();
+        BorderPane infoPane = getInfoPane();
 
 
         borderPane.setCenter(gameArea);
@@ -98,8 +51,10 @@ public class GameScene extends Scene {
         borderPane.setMinSize(500, 500);
     }
 
-    private void createCells(GridPane gridPane){
-        List<Pane> boxes = new ArrayList<>();
+    private GridPane getGameArea(){
+
+        GridPane gridPane = new GridPane();
+        boxes = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             Pane p = new Pane();
             p.getStyleClass().add("blank-field");
@@ -110,31 +65,43 @@ public class GameScene extends Scene {
 
                     switch (game.gameMode){
                         case HUMANvsAI:
-                            game.moveHuman(o, finalI);
-                            p.getStyleClass().remove("blank-field");
-                            p.getStyleClass().add("O-field");
+                            if(playerModel.getNexPlaxerToMove().getPlayerValue() == o.getPlayerValue()){
+                                game.moveHuman(o, finalI);
+                                p.getStyleClass().removeAll("O-field", "X-field", "blank-field");
+                                p.getStyleClass().add("O-field");
+                            }
 
                             if(!game.isGameOver()){
-                                game.getPlayerModel().setMaximisingPlayer(x);
+                                game.getPlayerModel().setNexPlaxerToMove(x);
 
                                 game.moveAIPlayer(x, 11);
-                                boxes.get(game.getGameBoard().getLastMove()).getStyleClass().remove("blank-field");
+                                boxes.get(game.getGameBoard().getLastMove()).getStyleClass().removeAll("O-field", "X-field", "blank-field");
                                 boxes.get(game.getGameBoard().getLastMove()).getStyleClass().add("X-field");
 
+                            }
+
+                            if (game.isGameOver()){
+                                labelVS.setText(x.getScore() + "   :   "  + o.getScore());
                             }
                             break;
 
                         case HUMANvsHUMAN:
-                            if(playerModel.getMaximisingPlayer().getPlayerValue() == x.getPlayerValue()){
+                            if(playerModel.getNexPlaxerToMove().getPlayerValue() == x.getPlayerValue()){
                                 game.moveHuman(x, finalI);
-                                p.getStyleClass().remove("blank-field");
+                                p.getStyleClass().removeAll("O-field", "X-field", "blank-field");
                                 p.getStyleClass().add("X-field");
 
                             }else {
                                 game.moveHuman(o, finalI);
-                                p.getStyleClass().remove("blank-field");
+                                p.getStyleClass().removeAll("O-field", "X-field", "blank-field");
                                 p.getStyleClass().add("O-field");
                             }
+
+
+                            if (game.isGameOver()){
+                                labelVS.setText(x.getScore() + "   :   "  + o.getScore());
+                            }
+
                             break;
 
                     }
@@ -163,5 +130,110 @@ public class GameScene extends Scene {
         }
 
 
+
+        return gridPane;
+    }
+
+    private BorderPane getInfoPane(){
+
+        BorderPane infoPane = new BorderPane();
+        infoPane.getStyleClass().add("background");
+
+        Button btnReset = new Button("Reset Board");
+
+        Button btnStartAI = new Button("Start PC");
+        btnStartAI.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> {
+            if( game.getGameBoard().getMoves().size() == 9){
+
+                game.getPlayerModel().setNexPlaxerToMove(x);
+                game.moveAIPlayer(x, 11);
+                boxes.get(game.getGameBoard().getLastMove()).getStyleClass().removeAll("O-field", "X-field", "blank-field");
+                boxes.get(game.getGameBoard().getLastMove()).getStyleClass().add("X-field");
+
+            }
+
+            if(game.gameMode == Game.Mode.HUMANvsAI) btnStartAI.setDisable(true);
+        });
+
+
+        Label labelX = new Label();
+        labelX.setPrefSize(50, 50);
+        labelX.getStyleClass().add("label-x");
+
+        Label lableAI = new Label();
+        lableAI.setPrefSize(50, 50);
+        lableAI.addEventHandler(MouseEvent.MOUSE_RELEASED, event1 -> {
+            switch (game.gameMode){
+                case HUMANvsHUMAN:
+                    game.gameMode = Game.Mode.HUMANvsAI;
+                    lableAI.getStyleClass().removeAll("label-human", "label-AI");
+                    lableAI.getStyleClass().add("label-AI");
+                    resetBoxes(btnStartAI);
+                    break;
+                case HUMANvsAI:
+                    game.gameMode = Game.Mode.HUMANvsHUMAN;
+                    lableAI.getStyleClass().removeAll("label-human", "label-AI");
+                    lableAI.getStyleClass().add("label-human");
+                    resetBoxes(btnStartAI);
+                    break;
+            }
+        });
+        lableAI.getStyleClass().add("label-AI");
+
+        HBox hBoxX = new HBox();
+        hBoxX.getChildren().addAll(lableAI, labelX);
+
+
+        Label labelO = new Label();
+        labelO.setPrefSize(50, 50);
+        labelO.getStyleClass().add("label-o");
+
+        Label labelHuman = new Label();
+        labelHuman.setPrefSize(50, 50);
+        labelHuman.getStyleClass().add("label-human");
+
+        HBox hBoxO = new HBox();
+        hBoxO.getChildren().addAll(labelO, labelHuman);
+
+       labelVS = new Label("0    :   0");
+
+
+        btnReset.setOnMouseReleased(e -> resetBoxes(btnStartAI));
+
+        Button btnNewGame = new Button("New Game");
+        btnNewGame.setOnMouseReleased(e -> {
+            resetBoxes(btnStartAI);
+            x.resetScore();
+            o.resetScore();
+            labelVS.setText(x.getScore() + "   :   "  + o.getScore());
+        });
+
+
+        BorderPane btnPane = new BorderPane();
+
+        btnPane.setLeft(btnReset);
+        btnPane.setCenter(btnStartAI);
+        btnPane.setRight(btnNewGame);
+
+
+
+        infoPane.setCenter(labelVS);
+        infoPane.setLeft(hBoxX);
+        infoPane.setRight(hBoxO);
+        infoPane.setBottom(btnPane);
+
+        return infoPane;
+    }
+
+    private void resetBoxes(Button btnStartAI){
+        game.getGameBoard().resetBoard();
+        game.getPlayerModel().setNexPlaxerToMove(x);
+        boxes.forEach(b -> {
+            b.getStyleClass().removeAll("O-field", "X-field");
+            b.getStyleClass().add("blank-field");
+        });
+
+        if(game.gameMode == Game.Mode.HUMANvsAI) btnStartAI.setDisable(false);
+        else btnStartAI.setDisable(true);
     }
 }

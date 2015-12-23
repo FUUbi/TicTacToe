@@ -16,7 +16,9 @@ public class GameBoard {
     }
 
     public void resetBoard() {
-        board = new int[9];
+        for (int i = 0; i < 9; i++) {
+            board[i] = 0;
+        }
     }
 
     public void setMove(int pos, int player) {

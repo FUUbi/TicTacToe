@@ -6,24 +6,24 @@ package ch.fhnw.tictactoe.logic;
 public class PlayerModel {
     Player x;
     Player o;
-    Player maximisingPlayer;
+    Player nexPlaxerToMove;
 
     public PlayerModel() {
         this.x = new Player(1);
         this.o = new Player(-1);
-        maximisingPlayer = x;
+        nexPlaxerToMove = x;
     }
 
     public Player getOponed(Player player){
         return (x.getPlayerValue() == player.getPlayerValue()) ? o : x;
     }
 
-    public Player getMaximisingPlayer() {
-        return maximisingPlayer;
+    public Player getNexPlaxerToMove() {
+        return nexPlaxerToMove;
     }
 
-    public void setMaximisingPlayer(Player maximisingPlayer) {
-        this.maximisingPlayer = maximisingPlayer;
+    public void setNexPlaxerToMove(Player nexPlaxerToMove) {
+        this.nexPlaxerToMove = nexPlaxerToMove;
     }
 
     public Player getX() {
