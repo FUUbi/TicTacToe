@@ -4,8 +4,10 @@ import ch.fhnw.tictactoe.app.ApplicationContext;
 import ch.fhnw.tictactoe.logic.Game;
 import ch.fhnw.tictactoe.logic.Player;
 import ch.fhnw.tictactoe.logic.PlayerModel;
+import javafx.collections.FXCollections;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -19,6 +21,7 @@ import java.util.List;
  */
 public class GameScene extends Scene {
     List<Pane> boxes;
+    ComboBox<Integer> depth;
     Game game;
     int[] board;
     PlayerModel playerModel;
@@ -74,7 +77,7 @@ public class GameScene extends Scene {
                             if(!game.isGameOver()){
                                 game.getPlayerModel().setNexPlaxerToMove(x);
 
-                                game.moveAIPlayer(x, 11);
+                                game.moveAIPlayer(x, depth.getValue());
                                 boxes.get(game.getGameBoard().getLastMove()).getStyleClass().removeAll("O-field", "X-field", "blank-field");
                                 boxes.get(game.getGameBoard().getLastMove()).getStyleClass().add("X-field");
 
@@ -146,7 +149,7 @@ public class GameScene extends Scene {
             if( game.getGameBoard().getMoves().size() == 9){
 
                 game.getPlayerModel().setNexPlaxerToMove(x);
-                game.moveAIPlayer(x, 11);
+                game.moveAIPlayer(x, depth.getValue());
                 boxes.get(game.getGameBoard().getLastMove()).getStyleClass().removeAll("O-field", "X-field", "blank-field");
                 boxes.get(game.getGameBoard().getLastMove()).getStyleClass().add("X-field");
 
@@ -180,8 +183,12 @@ public class GameScene extends Scene {
         });
         lableAI.getStyleClass().add("label-AI");
 
+        depth = new ComboBox<>(FXCollections.observableArrayList(1, 2, 3, 4,5, 6, 7, 8, 9, 10));
+        depth.setValue(9);
+        depth.setPrefSize(80, 50);
+
         HBox hBoxX = new HBox();
-        hBoxX.getChildren().addAll(lableAI, labelX);
+        hBoxX.getChildren().addAll(depth, lableAI, labelX);
 
 
         Label labelO = new Label();

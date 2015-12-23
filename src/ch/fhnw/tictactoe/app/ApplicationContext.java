@@ -17,6 +17,8 @@ public class ApplicationContext {
         game = new Game();
         Scene gameScene = new GameScene(this);
         primaryStage.setScene(gameScene);
+        primaryStage.setMinWidth(500);
+        primaryStage.setMinHeight(600);
         primaryStage.show();
     }
 
