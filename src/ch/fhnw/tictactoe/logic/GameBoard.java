@@ -10,7 +10,6 @@ public class GameBoard {
     public int[] board;
     private int lastMove;
 
-
     public GameBoard() {
         board = new int[9];
     }

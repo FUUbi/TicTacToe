@@ -46,7 +46,7 @@ public class Game {
     private int[] minimax(int depth, Player player) {
         List<Integer> moves = gameBoard.getMoves();
         Player maximisingPlayer = playerModel.getNexPlaxerToMove();
-
+        if (depth == 0 ) System.out.println(depth);
         int bestScore = (maximisingPlayer.getPlayerValue() == player.getPlayerValue()) ?  Integer.MIN_VALUE : Integer.MAX_VALUE;
         int bestMove = -1;
         if( depth == 0 || moves.size() == 0 || isGameOver()){
@@ -125,8 +125,6 @@ public class Game {
 
         return false;
     }
-
-
 
 
     public GameBoard getGameBoard() {

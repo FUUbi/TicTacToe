@@ -1,7 +1,7 @@
 package ch.fhnw.tictactoe.app;
 
-import ch.fhnw.tictactoe.logic.Game;
-import ch.fhnw.tictactoe.present.fx.GameScene;
+import ch.fhnw.tictactoe.logic.*;
+import ch.fhnw.tictactoe.present.fx.*;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -12,9 +12,11 @@ import javafx.stage.Stage;
  */
 public class ApplicationContext {
     private Game game;
+    private PlayerModel playerModel;
 
     public ApplicationContext(Stage primaryStage) {
         game = new Game();
+
         Scene gameScene = new GameScene(this);
         primaryStage.setScene(gameScene);
         primaryStage.setMinWidth(500);

@@ -3,7 +3,7 @@ package ch.fhnw.tictactoe.app;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class AppName extends Application {
+public class TicTacToe extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {

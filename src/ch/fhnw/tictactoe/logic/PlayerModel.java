@@ -6,12 +6,12 @@ package ch.fhnw.tictactoe.logic;
 public class PlayerModel {
     Player x;
     Player o;
-    Player nexPlaxerToMove;
+    Player nextPlayerToMove;
 
     public PlayerModel() {
         this.x = new Player(1);
         this.o = new Player(-1);
-        nexPlaxerToMove = x;
+        nextPlayerToMove = x;
     }
 
     public Player getOponed(Player player){
@@ -19,11 +19,11 @@ public class PlayerModel {
     }
 
     public Player getNexPlaxerToMove() {
-        return nexPlaxerToMove;
+        return nextPlayerToMove;
     }
 
     public void setNexPlaxerToMove(Player nexPlaxerToMove) {
-        this.nexPlaxerToMove = nexPlaxerToMove;
+        this.nextPlayerToMove = nexPlaxerToMove;
     }
 
     public Player getX() {

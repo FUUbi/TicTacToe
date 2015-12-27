@@ -37,6 +37,7 @@ public class GameScene extends Scene {
         getStylesheets().add(getClass().getResource("/css/gameStyle.css").toString());
 
 
+
         this.game = applicationContext.getGame();
         this.board = game.getGameBoard().getBoard();
         this.playerModel = applicationContext.getGame().getPlayerModel();
