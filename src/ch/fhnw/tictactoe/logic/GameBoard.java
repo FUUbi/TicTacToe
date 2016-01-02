@@ -8,7 +8,7 @@ import java.util.List;
  * all nine game cells are stored linearly in an array.
  */
 public class GameBoard {
-    private final int[] values;
+    private int[] values;
     private int lastMove;
 
     /**
@@ -76,6 +76,15 @@ public class GameBoard {
      */
     public int[] getValues() {
         return values;
+    }
+
+    /**
+     * Sets an array of length nine, containing all
+     * cell values.
+     * @param values the value of the game cells
+     */
+    public void setValues(int[] values){
+        this.values = values;
     }
 
 }
