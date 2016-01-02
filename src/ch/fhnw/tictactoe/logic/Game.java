@@ -75,6 +75,7 @@ public class Game {
 
         int bestScore = (maximisingPlayer.getValue() == player.getValue()) ?  Integer.MIN_VALUE : Integer.MAX_VALUE;
         int bestMove = -1;
+
         if( depth == 0 || moves.size() == 0 || isGameOver()){
             bestScore = heuristicValue();
         }else {

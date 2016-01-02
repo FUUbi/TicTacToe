@@ -1,4 +1,4 @@
-package ch.fhnw.test;
+package ch.fhnw.tictactoe.test;
 
 import ch.fhnw.tictactoe.logic.Game;
 import ch.fhnw.tictactoe.logic.Player;
